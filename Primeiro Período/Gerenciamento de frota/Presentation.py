@@ -99,6 +99,8 @@ class Presentation:
       print("7 - Buscar por quilometragem")
 
       option = int(input("\nDigite a opção desejada: "))      
+      if option < 1 or option > 7:
+        raise Exception("Opção inválida")
       value = input("Digite o valor: ")
 
       vehicles = self.dataSource.searchVehicles(self.searchParams[option], value)
