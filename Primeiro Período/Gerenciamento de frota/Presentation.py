@@ -44,6 +44,7 @@ class Presentation:
     print("3 - Remover um veículo da frota")
     print("4 - Editar um veículo da frota")
     print("5 - Buscar veículo/os por atributos")
+    print("0 - Sair")
 
   def showVehicles(self, vehicles) -> None:
     for vehicle in vehicles:
