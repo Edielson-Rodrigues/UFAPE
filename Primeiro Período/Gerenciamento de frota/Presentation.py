@@ -1,6 +1,6 @@
 from DataSource import DataSource
 
-class Apresentation:
+class Presentation:
   initialization = True
   def __init__(self) -> None:
     self.dataSource = DataSource()
@@ -21,14 +21,14 @@ class Apresentation:
         case 4:
           return self.editVehicle()
         case 5: 
-          return self.viewEspeficsVehicles()
+          return self.viewSpecificsVehicles()
         case 0:
-          print("\nAté mais!\n")
+          self.dataSource.saveInDataBase()
+          print("\nDados salvos no arquivo fleet.csv\nAté mais!\n")
+          exit()
         case _:
           print("\nOpção inválida\n")
           return self.rendererMenu()
-      
-      return self.dataSource.saveInDataBase()
     
     except Exception as e:
       print("Erro ao ler opção: ", e, "\n")
@@ -86,7 +86,7 @@ class Apresentation:
       print("Erro ao adicionar veículo: ", e, "\n")
       self.rendererMenu()
   
-  def viewEspeficsVehicles(self) -> None:
+  def viewSpecificsVehicles(self) -> None:
     try:
       print("\n", "-"*12 + "Buscar veículos por atributos" + "-"*12, "\n")
       print("1 - Buscar por id")
@@ -147,6 +147,7 @@ class Apresentation:
     try: 
       print("1 - Deletar por id")
       print("2 - Deletar por placa")
+      print("3 - Deletar todos os veículos")
 
       option = int(input("\nDigite a opção desejada: "))
 
@@ -160,6 +161,11 @@ class Apresentation:
         result = self.dataSource.deleteVehicle(self.searchParams[option], value)
         if result["status"] == 1:
           print("Veículo deletado com sucesso!\n")
+          self.rendererMenu()
+      elif option == 3:
+        result = self.dataSource.deleteAll()
+        if result["status"] == 1:
+          print("Todos os veículos foram deletados com sucesso!\n")
           self.rendererMenu()
       else:
         raise Exception("Opção inválida")

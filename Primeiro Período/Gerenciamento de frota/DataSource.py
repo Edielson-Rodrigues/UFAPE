@@ -41,7 +41,7 @@ class DataSource:
       return False
     
   def addVehicle(self, data) -> {"status"}:
-    if len([vehicle for vehicle in self.vehicles if vehicle["place"].lower() == data["place"].lower()]):
+    if len([vehicle for vehicle in self.vehicles if str(vehicle["place"]).lower() == str(data["place"]).lower()]):
       raise Exception("Placa já cadastrada")
     
     id = self.implementsId()
@@ -60,7 +60,7 @@ class DataSource:
     return { "status": 1 }
 
   def editVehicle(self, key, value, data) -> {"status"}:
-    index = [index for index, vehicle in enumerate(self.vehicles) if str(vehicle[key]).lower() == value.lower()]
+    index = [index for index, vehicle in enumerate(self.vehicles) if str(vehicle[key]).lower().replace(" ", "") == str(value).lower().replace(" ", "")]
     if not len(index):
       raise Exception("Veículo não encontrado")
 
@@ -82,20 +82,24 @@ class DataSource:
       return 0
 
   def searchVehicles(self, key, value) -> list:
-    vehicles = [vehicle for vehicle in self.vehicles if str(vehicle[key]).lower() == value.lower()]
+    vehicles = [vehicle for vehicle in self.vehicles if str(vehicle[key]).lower().replace(" ", "") == str(value).lower().replace(" ", "")]
     if not len(vehicles):
       raise Exception("Veículo não encontrado")
     
     return vehicles
 
   def deleteVehicle(self, key, value) -> {"status"}:
-    index = [index for index, vehicle in enumerate(self.vehicles) if str(vehicle[key]).lower() == value.lower()]
+    index = [index for index, vehicle in enumerate(self.vehicles) if str(vehicle[key]).lower().replace(" ", "") == str(value).lower().replace(" ", "")]
     if not len(index):
       raise Exception("Veículo não encontrado")
 
     self.vehicles.pop(index[0])
     return { "status": 1 }
 
+  def deleteAll(self) -> {"status"}: 
+    self.vehicles = []
+    return { "status": 1 }
+  
   def saveInDataBase(self) -> None:
     try:
       if self.fileExists():

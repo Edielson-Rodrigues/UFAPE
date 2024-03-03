@@ -1,4 +1,4 @@
-from Apresentation import Apresentation
+from Presentation import Presentation
 
-apresentation = Apresentation()
-Apresentation.rendererMenu(apresentation)
+presentation = Presentation()
+presentation.rendererMenu()
