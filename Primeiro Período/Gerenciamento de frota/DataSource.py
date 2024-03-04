@@ -35,7 +35,7 @@ class DataSource:
 
   def fileExists(self) -> bool:
     try: 
-      open('fleet.csv', 'r', encoding='utf-8')
+      open('fleet.csv', 'r', encoding='utf-8').close()
       return True
     except:
       return False
